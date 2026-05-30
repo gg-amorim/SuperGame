@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bfw4vpmvduo6d"]
+
+[ext_resource type="Script" uid="uid://bovrqsmr8ru2i" path="res://Scenes/Player/Player.cs" id="1_uvnfx"]
+[ext_resource type="Script" uid="uid://dny15qedmhj2b" path="res://Scripts/Components/CameraController.cs" id="2_jlvik"]
+[ext_resource type="Script" uid="uid://thwlbl6kihgc" path="res://Scripts/Components/InputComponent.cs" id="2_xpcdj"]
+[ext_resource type="Script" uid="uid://c85mxql8uvxsa" path="res://Scripts/Components/MovementComponent.cs" id="3_mtuoh"]
+[ext_resource type="Script" uid="uid://bn4umnufb6l0b" path="res://Core/StateMachine.cs" id="4_mtuoh"]
+[ext_resource type="Script" uid="uid://dejidc15tm1bl" path="res://Scenes/Player/States/PlayerIdleState.cs" id="5_dd0ac"]
+[ext_resource type="Script" uid="uid://bw2fklrh248ga" path="res://Scenes/Player/States/PlayerRunState.cs" id="6_0u5uq"]
+[ext_resource type="Script" uid="uid://1vtm8f43bo30" path="res://Scenes/Player/States/PlayerAirborneState.cs" id="7_0u5uq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a3d8c"]
+albedo_color = Color(0, 0.5019608, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xpcdj"]
+material = SubResource("StandardMaterial3D_a3d8c")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mtuoh"]
+
+[node name="Player" type="CharacterBody3D" unique_id=518784425]
+script = ExtResource("1_uvnfx")
+
+[node name="Visuals" type="Node3D" parent="." unique_id=2146722398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals" unique_id=638464376]
+mesh = SubResource("CapsuleMesh_xpcdj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=10108855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_mtuoh")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1224937005 node_paths=PackedStringArray("Target")]
+transform = Transform3D(0.7071067, 0.49999997, -0.49999994, 0, 0.70710677, 0.7071067, 0.7071067, -0.49999997, 0.49999994, 0, 1.5, 0)
+top_level = true
+script = ExtResource("2_jlvik")
+Target = NodePath("..")
+
+[node name="Camera" type="Camera3D" parent="CameraPivot" unique_id=130352967]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 8, 12)
+
+[node name="Components" type="Node" parent="." unique_id=1156462401]
+
+[node name="InputComponent" type="Node" parent="Components" unique_id=775517705]
+script = ExtResource("2_xpcdj")
+
+[node name="MovementComponent" type="Node" parent="Components" unique_id=1398883759 node_paths=PackedStringArray("_body", "_visuals")]
+script = ExtResource("3_mtuoh")
+_body = NodePath("../..")
+_visuals = NodePath("../../Visuals")
+
+[node name="StateMachine" type="Node" parent="Components" unique_id=410595806 node_paths=PackedStringArray("InitialState")]
+script = ExtResource("4_mtuoh")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Components/StateMachine" unique_id=147315328 node_paths=PackedStringArray("_input", "_movement")]
+script = ExtResource("5_dd0ac")
+_input = NodePath("../../InputComponent")
+_movement = NodePath("../../MovementComponent")
+
+[node name="Run" type="Node" parent="Components/StateMachine" unique_id=1455512275 node_paths=PackedStringArray("_input", "_movement")]
+script = ExtResource("6_0u5uq")
+_input = NodePath("../../InputComponent")
+_movement = NodePath("../../MovementComponent")
+
+[node name="Airborne" type="Node" parent="Components/StateMachine" unique_id=657628194 node_paths=PackedStringArray("_input", "_movement")]
+script = ExtResource("7_0u5uq")
+_input = NodePath("../../InputComponent")
+_movement = NodePath("../../MovementComponent")
