@@ -23,4 +23,4 @@ transform = Transform3D(0.99999994, 0, 0, 0, 0.70710677, 0.7071067, 0, -0.707106
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=518784425 instance=ExtResource("1_a02cp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.73446655, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

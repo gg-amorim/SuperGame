@@ -1,0 +1,48 @@
+using Godot;
+using MMO.Core;
+
+namespace MMO.Scenes.Player.States;
+
+
+public partial class JumpSprint : State
+{
+    private const float VERTICAL_SPEED_ADDED = 2.5f;
+    private const float TRANSITION_TIMING = 0.44f;
+    private const float JUMP_TIMING = 0.0657f;
+
+    private bool _jumped = false;
+
+    public override void _Ready()
+    {
+        Animation = "jump_sprint";
+    }
+
+    public override string CheckRelevance(InputPackage input)
+    {
+
+        if (WorksLongerThan(TRANSITION_TIMING))
+        {
+            _jumped = false;
+            return "midair";
+        }
+
+        return "okay";
+
+
+    }
+    public override void Update(InputPackage input, float delta)
+    {
+        if (WorksLongerThan(JUMP_TIMING))
+        {
+            if (!_jumped)
+            {
+                Vector3 velocity = Player.Velocity;
+                velocity.Y = VERTICAL_SPEED_ADDED;
+                Player.Velocity = velocity;
+                _jumped = true;
+            }
+        }
+
+        Player.MoveAndSlide();
+    }
+}

@@ -1,24 +1,37 @@
 using Godot;
+using MMO.Core;
+
+namespace MMO.Scripts.Components;
 
 public partial class InputComponent : Node
 {
-    // Usamos [Export] para podermos arrastar a referência do nó no Inspetor
-    [Export] private Node3D _cameraPivot;
-
-    public Vector3 GetDirection()
+    public InputPackage GatherInput()
     {
-        // 1. Lê as teclas
-        Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
-        Vector3 direction = new Vector3(inputDir.X, 0, inputDir.Y);
+        var newInput = new InputPackage();
 
-        // 2. Converte para a perspectiva da câmera (se ela existir)
-        if (_cameraPivot != null && direction != Vector3.Zero)
+        newInput.InputDirection = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
+
+        if (newInput.InputDirection != Vector2.Zero)
         {
-            direction = direction.Rotated(Vector3.Up, _cameraPivot.Rotation.Y).Normalized();
+            newInput.Actions.Add("run");
+
+            if (Input.IsActionPressed("sprint"))
+                newInput.Actions.Add("sprint");
         }
 
-        return direction;
-    }
+        if (Input.IsActionJustPressed("jump"))
+        {
+            if (newInput.Actions.Contains("sprint"))
+                newInput.Actions.Add("jump_sprint");
+            else
+                newInput.Actions.Add("jump_run");
+        }
 
-    public bool IsJumpPressed() => Input.IsActionJustPressed("jump");
+        if (newInput.Actions.Count == 0)
+        {
+            newInput.Actions.Add("idle");
+        }
+
+        return newInput;
+    }
 }
