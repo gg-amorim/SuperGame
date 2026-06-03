@@ -15,6 +15,7 @@ public partial class JumpSprint : State
     public override void _Ready()
     {
         Animation = "jump_sprint";
+        StateName = "jump_sprint";
     }
 
     public override string CheckRelevance(InputPackage input)

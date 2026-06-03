@@ -17,17 +17,12 @@ public partial class JumpRun : State
         StateName = "jump_run";
     }
 
-    // Boa prática: Sempre zerar variáveis de controle quando ENTRAR no estado
-    public override void OnEnterState()
-    {
-        _jumped = false;
-    }
-
     public override string CheckRelevance(InputPackage input)
     {
         // Agora o tempo vai avançar e ele conseguirá sair daqui!
         if (WorksLongerThan(TRANSITION_TIMING))
         {
+            _jumped = false;
             return "midair";
         }
 
@@ -36,10 +31,6 @@ public partial class JumpRun : State
 
     public override void Update(InputPackage input, float delta)
     {
-        // A LINHA MÁGICA: Chama o Update da classe base (State)
-        // Isso faz o cronômetro interno (TimeInState) do WorksLongerThan avançar!
-        base.Update(input, delta);
-
         if (WorksLongerThan(JUMP_TIMING))
         {
             if (!_jumped)
