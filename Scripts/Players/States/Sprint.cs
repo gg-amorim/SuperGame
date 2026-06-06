@@ -2,7 +2,7 @@ using MMO.Core;
 using Godot;
 
 
-namespace MMO.Scenes.Player.States;
+namespace MMO.Scripts.Players.States;
 
 public partial class Sprint : State
 {
@@ -32,6 +32,22 @@ public partial class Sprint : State
     public override void Update(InputPackage input, float delta)
     {
         Player.Velocity = VelocityByInput(input, delta);
+        if (Player.Velocity.LengthSquared() > 0.01f)
+        {
+
+            float targetAngle = Mathf.Atan2(Player.Velocity.X, Player.Velocity.Z);
+            float smoothRotation = Mathf.LerpAngle(Player.Visuals.Rotation.Y, targetAngle, 10f * delta);
+
+            Vector3 newRotation = new(
+                Player.Visuals.Rotation.X,
+                smoothRotation,
+                Player.Visuals.Rotation.Z
+            );
+
+            Player.Visuals.Rotation = newRotation;
+            Player.Model.Rotation = newRotation;
+        }
+
         Player.MoveAndSlide();
     }
 
@@ -39,7 +55,13 @@ public partial class Sprint : State
     {
         Vector3 newVelocity = Player.Velocity;
 
-        Vector3 direction = (Player.Transform.Basis * new Vector3(-input.InputDirection.X, 0, -input.InputDirection.Y)).Normalized();
+        // CORREÇÃO: Usamos GlobalBasis para garantir a orientação correta no mundo
+        Vector3 direction = Player.CameraMount.GlobalBasis * new Vector3(input.InputDirection.X, 0, input.InputDirection.Y);
+
+        // CRÍTICO: Zeramos o eixo Y para que olhar para cima/baixo não altere a velocidade horizontal
+        direction.Y = 0;
+        direction = direction.Normalized();
+
         newVelocity.X = direction.X * SPEED;
         newVelocity.Z = direction.Z * SPEED;
 

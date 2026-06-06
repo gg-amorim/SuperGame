@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://ckwcp3a645p2e"]
 
 [ext_resource type="PackedScene" uid="uid://bfw4vpmvduo6d" path="res://Scenes/Player/player.tscn" id="1_a02cp"]
+[ext_resource type="Texture2D" uid="uid://c6e6h7kjc7oaa" path="res://Assets/Textures/texture_08.png" id="1_go701"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_go701"]
-size = Vector3(30, 1, 30)
+[sub_resource type="Environment" id="Environment_a02cp"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_5a7ea"]
-size = Vector3(30, 1, 30)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5a7ea"]
+albedo_texture = ExtResource("1_go701")
 
 [node name="World" type="Node3D" unique_id=116956336]
 
-[node name="Floor" type="StaticBody3D" parent="." unique_id=1362499679]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=285498252]
+environment = SubResource("Environment_a02cp")
 
-[node name="Visual" type="MeshInstance3D" parent="Floor" unique_id=637497255]
-mesh = SubResource("BoxMesh_go701")
-
-[node name="Collider" type="CollisionShape3D" parent="Floor" unique_id=331030398]
-shape = SubResource("BoxShape3D_5a7ea")
+[node name="Floor" type="CSGBox3D" parent="." unique_id=120159257]
+material_override = SubResource("StandardMaterial3D_5a7ea")
+use_collision = true
+size = Vector3(20, 1, 20)
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=725347147]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.70710677, 0.7071067, 0, -0.70710677, 0.7071067, 0, 0, 0)
@@ -24,3 +24,12 @@ shadow_enabled = true
 
 [node name="Player" parent="." unique_id=518784425 instance=ExtResource("1_a02cp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=104166994]
+visible = false
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1045079721]
+visible = false
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=2145720154]
+visible = false

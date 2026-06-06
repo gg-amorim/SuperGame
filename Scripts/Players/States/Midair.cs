@@ -1,7 +1,7 @@
 using Godot;
 using MMO.Core;
 
-namespace MMO.Scenes.Player.States;
+namespace MMO.Scripts.Players.States;
 
 // Step 1: redefine your ClassName
 public partial class Midair : State

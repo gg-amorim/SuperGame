@@ -1,4 +1,5 @@
 using Godot;
+using MMO.Scripts.Players;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 
@@ -6,7 +7,7 @@ namespace MMO.Core;
 
 public partial class State : Node
 {
-    public CharacterBody3D Player { get; set; }
+    public Player Player { get; set; }
     public string Animation { get; set; }
     public string StateName { get; set; }
     public string QueuedMove { get; set; } = "none, drop error please";
@@ -14,7 +15,7 @@ public partial class State : Node
 
     private ulong _enterStateTime { get; set; }
 
-    public static readonly Dictionary<string, int> MovesPriority = new Dictionary<string, int>()
+    public static readonly Dictionary<string, int> MovesPriority = new()
     {
         { "idle", 1 },
         { "run", 2 },

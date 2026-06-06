@@ -1,7 +1,7 @@
 using Godot;
 using MMO.Core;
 
-namespace MMO.Scenes.Player.States;
+namespace MMO.Scripts.Players.States;
 
 
 public partial class LandingSprint : State

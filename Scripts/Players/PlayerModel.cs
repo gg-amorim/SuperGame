@@ -1,30 +1,29 @@
 using Godot;
+using MMO.Core;
+using MMO.Scripts.Weapons.Models;
 using System.Collections.Generic;
 
-namespace MMO.Core;
+namespace MMO.Scripts.Players;
 
 public partial class PlayerModel : Node3D
 {
-    private CharacterBody3D _player;
+    private Player _player;
     private Skeleton3D _skeleton;
     private AnimationPlayer _animator;
     private State _currentState;
+    private Weapon _activeWeapon;
     private Dictionary<string, State> _states;
 
     public Skeleton3D Skeleton => _skeleton;
     public AnimationPlayer Animator => _animator;
-
+    public Weapon ActiveWeapon => _activeWeapon;
     public override void _Ready()
     {
-        GD.Print("[DEBUG] A iniciar o PlayerModel _Ready()...");
-
-        _player = GetParent<CharacterBody3D>();
+        _player = GetParent<Player>();
         _skeleton = GetNode<Skeleton3D>("GeneralSkeleton");
         _animator = GetNode<AnimationPlayer>("AnimationPlayer");
-
-        // DEBUG 1: Verifica se o Animator foi encontrado na árvore de nós
-        GD.Print($"[DEBUG] Animator encontrado? {_animator != null}");
-
+        _activeWeapon = GetNode<Sword>("RightWrist/WeaponSocket/Sword");
+      
         _states = new Dictionary<string, State>()
         {
             { "idle", GetNode<State>("States/Idle") },
@@ -44,28 +43,12 @@ public partial class PlayerModel : Node3D
             state.Player = _player;
         }
 
-        // DEBUG 2: Verifica que nome de animação o estado Idle está a pedir
-        GD.Print($"[DEBUG] Estado atual definido para: '{_currentState.StateName}'");
-        GD.Print($"[DEBUG] Animação a ser pedida: '{_currentState.Animation}'");
-
-        // DEBUG 3: Verifica se a animação realmente existe dentro do AnimationPlayer
-        if (_animator != null)
-        {
-            bool temAnimacao = _animator.HasAnimation(_currentState.Animation);
-            GD.Print($"[DEBUG] A animação '{_currentState.Animation}' existe no Animator? {temAnimacao}");
-
-            if (!temAnimacao)
-            {
-                GD.PrintErr($"[ERRO GRAVE] A animação '{_currentState.Animation}' não existe! Verifique o nome no editor.");
-            }
-        }
 
         // Dá o tranco inicial
         _currentState.MarkEnterState();
         _currentState.OnEnterState();
         _animator.CallDeferred(AnimationPlayer.MethodName.Play, _currentState.Animation);
 
-        GD.Print("[DEBUG] Fim do _Ready(). O comando Play() foi chamado com sucesso.");
     }
 
     public void UpdateModel(InputPackage input, float delta)
@@ -81,14 +64,8 @@ public partial class PlayerModel : Node3D
     public void SwitchTo(string state)
     {
 
-        // ADICIONE ESTA LINHA:
-        GD.Print($"[State Machine] Mudando de '{_currentState.StateName}' para '{state}'");
 
-        if (!_states.ContainsKey(state))
-        {
-            GD.PrintErr($"[ERRO] Tentou mudar para o estado '{state}', mas ele não existe no dicionário!");
-            return;
-        }
+        if (!_states.ContainsKey(state)) return;
 
         _currentState.OnExitState();
         _currentState = _states[state];

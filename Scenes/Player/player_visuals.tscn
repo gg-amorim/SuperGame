@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cmlelkapf6l21"]
 
-[ext_resource type="Script" uid="uid://dsqk1faiv8luf" path="res://Scenes/Player/PlayerVisuals.cs" id="1_jty0f"]
+[ext_resource type="Script" uid="uid://dsqk1faiv8luf" path="res://Scripts/Players/PlayerVisuals.cs" id="1_jty0f"]
+[ext_resource type="PackedScene" uid="uid://cmmrxgitfldar" path="res://Scenes/Weapons/Skins/sword_visuals.tscn" id="2_liona"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1o2j5"]
 resource_name = "Beta_Joints_MAT1"
@@ -264,3 +265,5 @@ skin = SubResource("Skin_ijhgh")
 [node name="Beta_Surface" type="MeshInstance3D" parent="." unique_id=1290468452]
 mesh = SubResource("ArrayMesh_v6yev")
 skin = SubResource("Skin_ijhgh")
+
+[node name="SwordVisuals" parent="." unique_id=918549991 instance=ExtResource("2_liona")]

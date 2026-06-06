@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cmmrxgitfldar"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jty0f"]
+albedo_color = Color(0.7529412, 0.7529412, 0.7529412, 1)
+metallic = 1.0
+
+[node name="SwordVisuals" type="Node3D" unique_id=918549991]
+
+[node name="Core" type="CSGBox3D" parent="." unique_id=813351582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+material_override = SubResource("StandardMaterial3D_jty0f")
+size = Vector3(0.05, 1.5, 0.05)

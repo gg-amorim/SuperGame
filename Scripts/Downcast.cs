@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+namespace MMO.Scripts;
+
 public partial class Downcast : RayCast3D
 {
     private BoneAttachment3D _rootAttachment;

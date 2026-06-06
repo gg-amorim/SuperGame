@@ -1,20 +1,21 @@
 [gd_scene format=3 uid="uid://bcxeewregomfh"]
 
-[ext_resource type="Script" uid="uid://cok1f5vm111j0" path="res://Scenes/Player/PlayerModel.cs" id="1_vfn6k"]
-[ext_resource type="Script" uid="uid://djxfuqgvx5267" path="res://Scenes/Player/States/Idle.cs" id="2_1amd1"]
+[ext_resource type="Script" uid="uid://cok1f5vm111j0" path="res://Scripts/Players/PlayerModel.cs" id="1_vfn6k"]
+[ext_resource type="Script" uid="uid://djxfuqgvx5267" path="res://Scripts/Players/States/Idle.cs" id="2_1amd1"]
 [ext_resource type="Animation" uid="uid://bf1d4282m1ryw" path="res://Assets/Ready Animations/jump_run.res" id="2_i7x6h"]
 [ext_resource type="Animation" uid="uid://q6o7ddogrjmv" path="res://Assets/Ready Animations/jump_sprint.res" id="3_dtqil"]
-[ext_resource type="Script" uid="uid://bhafeo616g2hm" path="res://Scenes/Player/States/Run.cs" id="3_gkjlh"]
+[ext_resource type="Script" uid="uid://bhafeo616g2hm" path="res://Scripts/Players/States/Run.cs" id="3_gkjlh"]
 [ext_resource type="Animation" uid="uid://dcklgh1qspg7t" path="res://Assets/Ready Animations/landing_run.res" id="4_lpc3u"]
-[ext_resource type="Script" uid="uid://b826nn105m0b8" path="res://Scenes/Player/States/Sprint.cs" id="5_gkjlh"]
+[ext_resource type="Script" uid="uid://b826nn105m0b8" path="res://Scripts/Players/States/Sprint.cs" id="5_gkjlh"]
 [ext_resource type="Animation" uid="uid://cjry5u8re5msd" path="res://Assets/Ready Animations/landing_sprint.res" id="5_rmlrf"]
 [ext_resource type="Animation" uid="uid://bll6etjl7wd6m" path="res://Assets/Ready Animations/midair.res" id="6_m8ld2"]
-[ext_resource type="Script" uid="uid://r3xjvl4pb3rp" path="res://Scenes/Player/States/JumpSprint.cs" id="6_qidqp"]
-[ext_resource type="Script" uid="uid://dsuuu0vwb6f3r" path="res://Scenes/Player/States/JumpRun.cs" id="6_ywgbh"]
+[ext_resource type="Script" uid="uid://r3xjvl4pb3rp" path="res://Scripts/Players/States/JumpSprint.cs" id="6_qidqp"]
+[ext_resource type="Script" uid="uid://dsuuu0vwb6f3r" path="res://Scripts/Players/States/JumpRun.cs" id="6_ywgbh"]
 [ext_resource type="Script" uid="uid://wppvbq5id203" path="res://Scripts/Downcast.cs" id="7_dtqil"]
-[ext_resource type="Script" uid="uid://cqcbmucce78rg" path="res://Scenes/Player/States/LandingRun.cs" id="7_vy3up"]
-[ext_resource type="Script" uid="uid://djpw2ak64am8f" path="res://Scenes/Player/States/LandingSprint.cs" id="8_q773l"]
-[ext_resource type="Script" uid="uid://b0xvg6y130ou5" path="res://Scenes/Player/States/Midair.cs" id="9_o7h61"]
+[ext_resource type="PackedScene" uid="uid://dnmhgjryb2e4t" path="res://Scenes/Weapons/Models/sword.tscn" id="7_lpc3u"]
+[ext_resource type="Script" uid="uid://cqcbmucce78rg" path="res://Scripts/Players/States/LandingRun.cs" id="7_vy3up"]
+[ext_resource type="Script" uid="uid://djpw2ak64am8f" path="res://Scripts/Players/States/LandingSprint.cs" id="8_q773l"]
+[ext_resource type="Script" uid="uid://b0xvg6y130ou5" path="res://Scripts/Players/States/Midair.cs" id="9_o7h61"]
 
 [sub_resource type="Animation" id="Animation_6eaep"]
 resource_name = "TPose"
@@ -1728,7 +1729,7 @@ bones/18/parent = 17
 bones/18/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.952672e-07, 0.02772192, 1.04175555e-07)
 bones/18/enabled = true
 bones/18/position = Vector3(-1.952672e-07, 0.02772192, 1.04175555e-07)
-bones/18/rotation = Quaternion(1.4901163e-08, 1.4901163e-08, 1.4901163e-08, 1)
+bones/18/rotation = Quaternion(0, 0, 0, 1)
 bones/18/scale = Vector3(1, 1, 1)
 bones/19/name = "mixamorig_RightHandMiddle1"
 bones/19/parent = 10
@@ -1756,7 +1757,7 @@ bones/22/parent = 21
 bones/22/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.550781e-06, 0.029466353, 1.7656058e-08)
 bones/22/enabled = true
 bones/22/position = Vector3(-1.550781e-06, 0.029466353, 1.7656058e-08)
-bones/22/rotation = Quaternion(0, 0, 2.9802326e-08, 1)
+bones/22/rotation = Quaternion(0, 0, 0, 1)
 bones/22/scale = Vector3(1, 1, 1)
 bones/23/name = "mixamorig_RightHandRing1"
 bones/23/parent = 10
@@ -1784,7 +1785,7 @@ bones/26/parent = 25
 bones/26/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.40739e-06, 0.026388086, -1.6126906e-07)
 bones/26/enabled = true
 bones/26/position = Vector3(9.40739e-06, 0.026388086, -1.6126906e-07)
-bones/26/rotation = Quaternion(-2.9802315e-08, 2.9802315e-08, -2.9802315e-08, 1)
+bones/26/rotation = Quaternion(0, 0, 0, 1)
 bones/26/scale = Vector3(1, 1, 1)
 bones/27/name = "mixamorig_RightHandPinky1"
 bones/27/parent = 10
@@ -1812,7 +1813,7 @@ bones/30/parent = 29
 bones/30/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.68152e-05, 0.02115771, 2.6445113e-07)
 bones/30/enabled = true
 bones/30/position = Vector3(-3.68152e-05, 0.02115771, 2.6445113e-07)
-bones/30/rotation = Quaternion(1.4901161e-08, 1.4901161e-08, 0, 1)
+bones/30/rotation = Quaternion(0, 0, 0, 1)
 bones/30/scale = Vector3(1, 1, 1)
 bones/31/name = "LeftShoulder"
 bones/31/parent = 3
@@ -1952,7 +1953,7 @@ bones/50/parent = 49
 bones/50/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.665056e-07, 0.02644331, -6.126129e-08)
 bones/50/enabled = true
 bones/50/position = Vector3(-5.665056e-07, 0.02644331, -6.126129e-08)
-bones/50/rotation = Quaternion(5.9604645e-08, 4.4703484e-08, 0, 1)
+bones/50/rotation = Quaternion(0, 0, 0, 1)
 bones/50/scale = Vector3(1, 1, 1)
 bones/51/name = "mixamorig_LeftHandPinky1"
 bones/51/parent = 34
@@ -2014,7 +2015,7 @@ bones/59/name = "mixamorig_RightToe_End"
 bones/59/parent = 58
 bones/59/rest = Transform3D(-0.9997305, -3.0836034e-07, -0.023214381, -2.0019575e-06, 0.9999997, 7.29314e-05, 0.023214381, 7.298802e-05, -0.9997303, -2.311829e-08, 0.0927812, 6.7787896e-06)
 bones/59/enabled = true
-bones/59/position = Vector3(-2.3118295e-08, 0.0927812, 6.775564e-06)
+bones/59/position = Vector3(-2.311829e-08, 0.0927812, 6.7787896e-06)
 bones/59/rotation = Quaternion(-5.7744535e-07, 0.99993265, 3.6489768e-05, -0.011607972)
 bones/59/scale = Vector3(1, 0.9999997, 0.99999976)
 bones/60/name = "LeftUpperLeg"
@@ -2060,6 +2061,19 @@ bone_idx = 0
 use_external_skeleton = true
 external_skeleton = NodePath("../GeneralSkeleton")
 
+[node name="RightWrist" type="BoneAttachment3D" parent="." unique_id=742345871]
+transform = Transform3D(0.8031924, -0.58747643, 0.098759316, 0.54807574, 0.6637658, -0.5089478, 0.23344198, 0.4629104, 0.8551135, -0.4651661, 1.3048055, -0.10184467)
+bone_name = "RightHand"
+bone_idx = 10
+use_external_skeleton = true
+external_skeleton = NodePath("../GeneralSkeleton")
+
+[node name="WeaponSocket" type="Node3D" parent="RightWrist" unique_id=695147790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.008, 0.065, 0.03)
+
+[node name="Sword" parent="RightWrist/WeaponSocket" unique_id=692855401 instance=ExtResource("7_lpc3u")]
+transform = Transform3D(0.15532002, 0.93115795, 0.32987943, -0.87545216, 0.28445163, -0.39073113, -0.45766717, -0.2281053, 0.8593653, 0, 0, 0)
+
 [node name="Downcast" type="RayCast3D" parent="." unique_id=1330499707]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
 target_position = Vector3(0, -100, 0)
@@ -2090,3 +2104,9 @@ script = ExtResource("8_q773l")
 
 [node name="Midair" type="Node" parent="States" unique_id=1544398373]
 script = ExtResource("9_o7h61")
+
+[node name="Slash1" type="Node" parent="States" unique_id=739206760]
+
+[node name="Slash2" type="Node" parent="States" unique_id=26414118]
+
+[node name="Slash3" type="Node" parent="States" unique_id=1302592814]

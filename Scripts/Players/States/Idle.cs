@@ -1,7 +1,7 @@
 using MMO.Core;
 using Godot;
 
-namespace MMO.Scenes.Player.States;
+namespace MMO.Scripts.Players.States;
 
 public partial class Idle : State
 {

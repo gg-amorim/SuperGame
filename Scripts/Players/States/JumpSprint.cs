@@ -1,25 +1,26 @@
 using Godot;
 using MMO.Core;
 
-namespace MMO.Scenes.Player.States;
+namespace MMO.Scripts.Players.States;
 
-public partial class JumpRun : State
+
+public partial class JumpSprint : State
 {
     private const float VERTICAL_SPEED_ADDED = 2.5f;
     private const float TRANSITION_TIMING = 0.44f;
-    private const float JUMP_TIMING = 0.1f;
+    private const float JUMP_TIMING = 0.0657f;
 
     private bool _jumped = false;
 
     public override void _Ready()
     {
-        Animation = "jump_run";
-        StateName = "jump_run";
+        Animation = "jump_sprint";
+        StateName = "jump_sprint";
     }
 
     public override string CheckRelevance(InputPackage input)
     {
-        // Agora o tempo vai avançar e ele conseguirá sair daqui!
+
         if (WorksLongerThan(TRANSITION_TIMING))
         {
             _jumped = false;
@@ -27,8 +28,9 @@ public partial class JumpRun : State
         }
 
         return "okay";
-    }
 
+
+    }
     public override void Update(InputPackage input, float delta)
     {
         if (WorksLongerThan(JUMP_TIMING))

@@ -42,10 +42,10 @@ res://
 │   ├── Player/            # Cenas (.tscn) e malhas exclusivas do jogador
 │   └── Shared/            # Componentes reutilizáveis (ex: zonas de colisão, chão)
 └── Scripts/
-    ├── Components/        # Nós puramente comportamentais (InputComponent, MovementComponent)
-    ├── Player/
-    │   └── States/        # Estados concretos da FSM (PlayerIdleState, PlayerRunState)
-    └── UI/                # Controladores de interfaces gráficas e menus
+	├── Components/        # Nós puramente comportamentais (InputComponent, MovementComponent)
+	├── Player/
+	│   └── States/        # Estados concretos da FSM (PlayerIdleState, PlayerRunState)
+	└── UI/                # Controladores de interfaces gráficas e menus
 
 ---
 

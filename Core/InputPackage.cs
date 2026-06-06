@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MMO.Core;
 
-public class InputPackage 
+public partial class InputPackage : Node
 {
     public List<string> Actions { get; set; } = [];
 
