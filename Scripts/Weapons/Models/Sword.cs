@@ -6,7 +6,7 @@ public partial class Sword : Weapon
 {
     public override void _Ready()
     {
-        BasicsAttacks = new Dictionary<string, string>()
+        BasicAttacks = new Dictionary<string, string>()
         {
             {"light_attack_pressed", "slash_1" }
         };

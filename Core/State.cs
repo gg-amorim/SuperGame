@@ -1,5 +1,7 @@
 using Godot;
 using MMO.Scripts.Players;
+using MMO.Scripts.Players.States.Combos.Sword;
+using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 
@@ -25,6 +27,9 @@ public partial class State : Node
         { "midair", 10 },
         { "landing_run", 10 },
         { "landing_sprint", 10 },
+        { "slash_1", 15 },
+        { "slash_2", 15 },
+        { "slash_3", 15 },
     };
 
     public static int MovesPrioritySort(string a, string b)
@@ -51,6 +56,20 @@ public partial class State : Node
     {
         double progress = GetProgress();
         return progress >= start && progress <= finish;
+    }
+
+    public void CheckCombos(InputPackage input)
+    {
+        var availableCombos = GetChildren();
+
+        foreach (Combo combo in availableCombos)
+        {
+            if (combo.IsTriggered(input))
+            {
+                HasQueuedMove = true;
+                QueuedMove = combo.TriggeredMove;
+            }
+        }
     }
 
     public virtual string CheckRelevance(InputPackage input)
