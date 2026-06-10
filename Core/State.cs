@@ -1,5 +1,7 @@
 using Godot;
 using MMO.Scripts.Players;
+using MMO.Scripts.Players.States.Combos.Sword;
+using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 
@@ -8,10 +10,22 @@ namespace MMO.Core;
 public partial class State : Node
 {
     public Player Player { get; set; }
-    public string Animation { get; set; }
+    public ResourcesComponent Resources { get; set; }
+    public MovesData MovesData { get; set; }
+    [Export] public string AnimationStr { get; set; }
+    [Export] public string BackendAnimation { get; set; }
+    [Export] public AnimationPlayer Animator { get; set; }
+    [Export] public float StaminaCost { get; set; } = 0f;
+
     public string StateName { get; set; }
-    public string QueuedMove { get; set; } = "none, drop error please";
+
     public bool HasQueuedMove { get; set; } = false;
+    public string QueuedMove { get; set; } = "none, drop error please";
+
+    public bool HasForcedMove { get; set; } = false;
+    public string ForcedMove { get; set; } = "none, drop error please";
+
+    private List<Combo> _combos = new List<Combo>();
 
     private ulong _enterStateTime { get; set; }
 
@@ -21,10 +35,18 @@ public partial class State : Node
         { "run", 2 },
         { "sprint", 3 },
         { "jump_run", 10 },
-        { "jump_sprint", 10 },
         { "midair", 10 },
         { "landing_run", 10 },
+        { "jump_sprint", 10 },
         { "landing_sprint", 10 },
+        { "slash_1", 15 },
+        { "slash_2", 15 },
+        { "slash_3", 15 },
+        { "parry", 20 },
+        { "riposte", 25 },
+        { "parried", 100 },
+        { "staggered", 100 },
+        { "death", 200 }
     };
 
     public static int MovesPrioritySort(string a, string b)
@@ -40,25 +62,89 @@ public partial class State : Node
         _enterStateTime = Time.GetTicksMsec();
     }
 
-    public double GetProgress()
+    public float GetProgress()
     {
-        return (Time.GetTicksMsec() - _enterStateTime) / 1000.0;
+        return (float)((Time.GetTicksMsec() - _enterStateTime) / 1000.0);
     }
 
     public bool WorksLongerThan(float time) => GetProgress() >= time;
     public bool WorksLessThan(float time) => GetProgress() < time;
     public bool WorksBetween(float start, float finish)
     {
-        double progress = GetProgress();
+        float progress = GetProgress();
         return progress >= start && progress <= finish;
+    }
+    public void AssignCombos()
+    {
+        foreach (Node child in GetChildren())
+        {
+            if (child is Combo combo)
+            {
+                _combos.Add(combo);
+                combo.State = this; 
+            }
+        }
+    }
+    public void CheckCombos(InputPackage input)
+    {
+        foreach (Combo combo in _combos)
+        {
+            // Nota: Confirme o caminho de acesso ao dicionário de moves do seu modelo de jogador.
+            State triggeredState = Player.Model.States[combo.TriggeredMove];
+
+            if (combo.IsTriggered(input) && Resources.CanBePaid(triggeredState))
+            {
+                HasQueuedMove = true;
+                QueuedMove = combo.TriggeredMove;
+            }
+        }
     }
 
     public virtual string CheckRelevance(InputPackage input)
     {
-        GD.PrintErr("error, implement the check_relevance function on your state");
-        return "error, implement the check_relevance function on your state";
+        if (HasForcedMove)
+        {
+            HasForcedMove = false;
+            return ForcedMove;
+        }
+
+        CheckCombos(input);
+        return DefaultLifecycle(input);
     }
 
+    public string BestInputThatCanBePaid(InputPackage input)
+    {
+        // O Sort customizado substitui o lambda do GDScript
+        input.Actions.Sort(MovesPrioritySort);
+
+        foreach (string action in input.Actions)
+        {
+            State move = Player.Model.States[action];
+            if (Resources.CanBePaid(move))
+            {
+                if (move == this)
+                    return "okay";
+                else
+                    return action;
+            }
+        }
+        return "throwing because for some reason input.actions doesn't contain even idle";
+    }
+    public void UpdateResources(float delta)
+    {
+        Resources.Update(delta);
+    }
+    public bool IsVulnerable() => MovesData.GetVulnerable(BackendAnimation, GetProgress());
+
+    public bool IsInterruptable() => MovesData.GetInterruptable(BackendAnimation, GetProgress());
+
+    public bool IsParryable() => MovesData.GetParryable(BackendAnimation, GetProgress());
+
+
+    public virtual string DefaultLifecycle(InputPackage input)
+    {
+        return "implement default lifecycle pepega " + AnimationStr;
+    }
     public virtual void Update(InputPackage input, float delta)
     {
     }
@@ -69,6 +155,42 @@ public partial class State : Node
 
     public virtual void OnExitState()
     {
+    }
+
+    public virtual HitData FormHitData(Weapon weapon)
+    {
+        GD.Print("someone tries to get hit by default Move");
+        return HitData.Blank(); // Supondo que você crie o método estático Blank() em HitData
+    }
+
+    public virtual void ReactOnHit(HitData hit)
+    {
+        if (IsVulnerable())
+        {
+            Resources.LoseHealth(hit.Damage);
+        }
+        if (IsInterruptable())
+        {
+            TryForceMove("staggered");
+        }
+    }
+
+    public virtual void ReactOnParry(HitData hit)
+    {
+        TryForceMove("parried");
+    }
+
+    public void TryForceMove(string newForcedMove)
+    {
+        if (!HasForcedMove)
+        {
+            HasForcedMove = true;
+            ForcedMove = newForcedMove;
+        }
+        else if (MovesPriority.GetValueOrDefault(newForcedMove, 0) >= MovesPriority.GetValueOrDefault(ForcedMove, 0))
+        {
+            ForcedMove = newForcedMove;
+        }
     }
 }
 /***

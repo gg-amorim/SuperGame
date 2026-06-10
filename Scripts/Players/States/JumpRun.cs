@@ -11,13 +11,7 @@ public partial class JumpRun : State
 
     private bool _jumped = false;
 
-    public override void _Ready()
-    {
-        Animation = "jump_run";
-        StateName = "jump_run";
-    }
-
-    public override string CheckRelevance(InputPackage input)
+    public override string DefaultLifecycle(InputPackage input)
     {
         // Agora o tempo vai avançar e ele conseguirá sair daqui!
         if (WorksLongerThan(TRANSITION_TIMING))

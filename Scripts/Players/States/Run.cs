@@ -11,19 +11,14 @@ public partial class Run : State
 
     public override void _Ready()
     {
-        Animation = "run";
+        AnimationStr = "run";
         StateName = "run";
     }
-    public override string CheckRelevance(InputPackage input)
+    public override string DefaultLifecycle(InputPackage input)
     {
         if (!Player.IsOnFloor()) return "midair";
 
-        input.Actions.Sort(MovesPrioritySort);
-        if (input.Actions[0] == "run")
-        {
-            return "okay";
-        }
-        return input.Actions[0];
+        return BestInputThatCanBePaid(input);
     }
 
     public override void Update(InputPackage input, float delta)

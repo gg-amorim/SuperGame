@@ -12,7 +12,7 @@ public partial class CameraFollow : Camera3D
     [Export]
     public float LerpPosition { get; set; } = 1.0f;
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         // Boa prática: sempre verificar se o nó referenciado não é nulo 
         // antes de tentar acessar suas propriedades no C#

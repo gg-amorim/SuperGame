@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bf2reeur6x3i1"]
+
+[ext_resource type="Script" uid="uid://bauhsn4alnlt4" path="res://Scripts/Components/ConsecutiveAttack.cs" id="1_v74kb"]
+
+[node name="ConsecutiveAttack" type="Node" unique_id=1838880877]
+script = ExtResource("1_v74kb")

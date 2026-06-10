@@ -16,20 +16,13 @@ public partial class Midair : State
     {
         _downcast = GetNode<RayCast3D>("../../Downcast");
         _rootAttachment = GetNode<BoneAttachment3D>("../../Root");
-        Animation = "midair";
-        StateName = "midair";
     }
 
-    // Step 3: navigate to PlayerModel and add a new state to moves dictionary
-    // Step 4: navigate to base State and add this new state to priority dictionary
-
-    // Step 5: implement a check_relevance function to manage transitions, return action name or "okay"
-    public override string CheckRelevance(InputPackage input)
+    public override string DefaultLifecycle(InputPackage input)
     {
         Vector3 floorPoint = _downcast.GetCollisionPoint();
         if (_rootAttachment.GlobalPosition.DistanceTo(floorPoint) < _landingHeight)
         {
-            // Criamos a cópia para zerar o Y e calcular o comprimento XZ
             Vector3 xzVelocity = Player.Velocity;
             xzVelocity.Y = 0;
 
@@ -42,8 +35,6 @@ public partial class Midair : State
 
         return "okay";
     }
-
-    // Step 6: implement an update function
     public override void Update(InputPackage input, float delta)
     {
         Vector3 velocity = Player.Velocity;

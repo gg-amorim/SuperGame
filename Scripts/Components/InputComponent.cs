@@ -27,10 +27,14 @@ public partial class InputComponent : Node
                 newInput.Actions.Add("jump_run");
         }
 
-        if (newInput.Actions.Count == 0)
+        if (Input.IsActionPressed("light_attack"))
         {
-            newInput.Actions.Add("idle");
+
+            newInput.CombatActions.Add("light_attack_pressed");
         }
+
+        if (newInput.Actions.Count == 0)
+            newInput.Actions.Add("idle");
 
         return newInput;
     }

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ds4albcilhcfk"]
+
+[ext_resource type="Script" uid="uid://mo4o4owkfi2w" path="res://Scripts/Players/Combos/RiposteCombo.cs" id="1_vbhd5"]
+
+[node name="Riposte" type="Node" unique_id=672444391]
+script = ExtResource("1_vbhd5")

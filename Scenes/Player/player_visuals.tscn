@@ -267,3 +267,25 @@ mesh = SubResource("ArrayMesh_v6yev")
 skin = SubResource("Skin_ijhgh")
 
 [node name="SwordVisuals" parent="." unique_id=918549991 instance=ExtResource("2_liona")]
+
+[node name="Stamina_Bar" type="Label" parent="." unique_id=704141163]
+visible = false
+offset_left = 93.0
+offset_top = 91.0
+offset_right = 253.0
+offset_bottom = 141.0
+theme_override_font_sizes/font_size = 35
+text = "Stamina: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Health_Bar" type="Label" parent="." unique_id=1779911451]
+visible = false
+offset_left = 93.0
+offset_top = 155.0
+offset_right = 253.0
+offset_bottom = 205.0
+theme_override_font_sizes/font_size = 35
+text = "Health: "
+horizontal_alignment = 1
+vertical_alignment = 1

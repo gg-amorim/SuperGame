@@ -10,7 +10,7 @@ public partial class NewState : State
 
     public override void _Ready()
     {
-        Animation = "sprint";
+        AnimationStr = "sprint";
     }
 
     // Step 3: navigate to PlayerModel and add a new state to moves dictionary

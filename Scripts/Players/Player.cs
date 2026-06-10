@@ -29,7 +29,5 @@ public partial class Player : CharacterBody3D
 
         InputPackage input = _inputGatherer.GatherInput();
         _model.UpdateModel(input, (float)delta);
-
-        input.QueueFree();
     }
 }

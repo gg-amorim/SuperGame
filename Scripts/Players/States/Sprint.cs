@@ -10,27 +10,18 @@ public partial class Sprint : State
     private float _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
 
-    public override void _Ready()
+    public override string DefaultLifecycle(InputPackage input)
     {
-        Animation = "sprint";
-        StateName = "sprint";
-    }
+        if (!Player.IsOnFloor()) return "midair";
 
-    public override string CheckRelevance(InputPackage input)
-    {
-        if (!Player.IsOnFloor())
-            return "midair";
-
-        input.Actions.Sort(MovesPrioritySort);
-        if (input.Actions[0] == "sprint")
-        {
-            return "okay";
-        }
-        return input.Actions[0];
+        return BestInputThatCanBePaid(input);
     }
 
     public override void Update(InputPackage input, float delta)
     {
+        Resources.LoseStamina(StaminaCost * delta);
+        if (Resources.Stamina < StaminaCost * delta) TryForceMove("run");
+
         Player.Velocity = VelocityByInput(input, delta);
         if (Player.Velocity.LengthSquared() > 0.01f)
         {

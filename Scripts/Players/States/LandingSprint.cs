@@ -8,20 +8,10 @@ public partial class LandingSprint : State
 {
     private float _gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
     private const float TRANSITION_TIMING = 0.2f;
-    public override void _Ready()
+    
+    public override string DefaultLifecycle(InputPackage input)
     {
-        Animation = "landing_sprint";
-        StateName = "landing_sprint";
-    }
-
- 
-    public override string CheckRelevance(InputPackage input)
-    {
-        if (WorksLongerThan(TRANSITION_TIMING))
-        {
-            input.Actions.Sort(MovesPrioritySort);
-            return input.Actions[0];
-        }
+        if (WorksLongerThan(TRANSITION_TIMING)) return BestInputThatCanBePaid(input);
 
         return "okay";
     }

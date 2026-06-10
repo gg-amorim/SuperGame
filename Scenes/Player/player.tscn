@@ -4,16 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://cmlelkapf6l21" path="res://Scenes/Player/player_visuals.tscn" id="2_0u5uq"]
 [ext_resource type="Script" uid="uid://thwlbl6kihgc" path="res://Scripts/Components/InputComponent.cs" id="2_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://bcxeewregomfh" path="res://Scenes/Player/humanoid_model.tscn" id="4_mtuoh"]
+[ext_resource type="Script" uid="uid://72uutbusvc2y" path="res://Scripts/Components/ResourcesComponent.cs" id="5_0u5uq"]
 [ext_resource type="Script" uid="uid://dmp81uqbrau11" path="res://Scripts/Components/CameraController.cs" id="5_dd0ac"]
 [ext_resource type="Script" uid="uid://ccse3y5whvcdj" path="res://Scripts/Components/CameraFollow.cs" id="6_0u5uq"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mtuoh"]
-radius = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dd0ac"]
 radius = 0.3
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dd0ac"]
+radius = 0.2
+height = 1.8
+
 [node name="Player" type="CharacterBody3D" unique_id=518784425]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 collision_layer = 2
 script = ExtResource("1_uvnfx")
 
@@ -21,17 +24,16 @@ script = ExtResource("1_uvnfx")
 
 [node name="Model" parent="." unique_id=232460588 instance=ExtResource("4_mtuoh")]
 
-[node name="Collider" type="CollisionShape3D" parent="." unique_id=10108855]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_mtuoh")
-
 [node name="Components" type="Node" parent="." unique_id=1156462401]
 
 [node name="InputComponent" type="Node" parent="Components" unique_id=775517705]
 script = ExtResource("2_xpcdj")
 
+[node name="ResourcesComponent" type="Node" parent="Components" unique_id=230040830]
+script = ExtResource("5_0u5uq")
+
 [node name="SpringArmoPivot" type="Node3D" parent="." unique_id=1248799356]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.65, 0)
 script = ExtResource("5_dd0ac")
 MinVerticalAngle = -0.7853981633974483
 MaxVerticalAngle = 0.39269908169872414
@@ -47,3 +49,7 @@ spring_length = 6.0
 script = ExtResource("6_0u5uq")
 SpringArm = NodePath("../SpringPosition")
 LerpPosition = 6.0
+
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=10108855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9019424, 0)
+shape = SubResource("CapsuleShape3D_dd0ac")

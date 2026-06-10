@@ -5,20 +5,17 @@ namespace MMO.Scripts.Players.States;
 
 public partial class Idle : State
 {
+    public override string DefaultLifecycle(InputPackage input)
+    {
+        if (!Player.IsOnFloor()) return "midair";
 
-    public override void _Ready()
-    {
-        Animation = "idle";
-        StateName = "idle";
-    }
-    public override string CheckRelevance(InputPackage input)
-    {
-        input.Actions.Sort(MovesPrioritySort);
-        if (input.Actions[0] == "idle")
+
+        if (HasQueuedMove && Resources.CanBePaid(Player.Model.States[QueuedMove]))
         {
-            return "okay";
+            HasQueuedMove = false;
+            return QueuedMove;
         }
-        return input.Actions[0];
+        return BestInputThatCanBePaid(input);
 
 
     }

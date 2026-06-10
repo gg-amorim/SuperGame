@@ -12,13 +12,7 @@ public partial class JumpSprint : State
 
     private bool _jumped = false;
 
-    public override void _Ready()
-    {
-        Animation = "jump_sprint";
-        StateName = "jump_sprint";
-    }
-
-    public override string CheckRelevance(InputPackage input)
+    public override string DefaultLifecycle(InputPackage input)
     {
 
         if (WorksLongerThan(TRANSITION_TIMING))
