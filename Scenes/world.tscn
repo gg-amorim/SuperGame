@@ -39,6 +39,7 @@ size = Vector3(20, 1, 30)
 
 [node name="Light" type="DirectionalLight3D" parent="." unique_id=725347147]
 transform = Transform3D(-0.8660253, -0.43301275, 0.24999997, 0, 0.49999994, 0.8660253, -0.5, 0.74999994, -0.4330126, 0, 0, 0)
+light_energy = 0.25
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=518784425 instance=ExtResource("1_a02cp")]

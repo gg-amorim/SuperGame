@@ -229,6 +229,9 @@ bind/64/name = &"mixamorig_LeftToe_End"
 bind/64/bone = -1
 bind/64/pose = Transform3D(-0.9997181, 0.023736957, 1.4211112e-06, -3.083645e-07, -7.2915915e-05, 1.0000001, 0.023736946, 0.99971855, 7.284309e-05, 0.08205436, -0.17246021, -0.0019622277)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_liona"]
+albedo_color = Color(0, 1, 0, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5rco"]
 resource_name = "Beta_HighLimbsGeoSG3"
 cull_mode = 2
@@ -255,21 +258,25 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xw0cg"]
+albedo_color = Color(0, 0.44033605, 3.85046e-07, 1)
+
 [node name="Visuals" type="Node3D" unique_id=1973618362]
 script = ExtResource("1_jty0f")
 
 [node name="Beta_Joints" type="MeshInstance3D" parent="." unique_id=614325937]
 mesh = SubResource("ArrayMesh_dj01t")
 skin = SubResource("Skin_ijhgh")
+surface_material_override/0 = SubResource("StandardMaterial3D_liona")
 
 [node name="Beta_Surface" type="MeshInstance3D" parent="." unique_id=1290468452]
 mesh = SubResource("ArrayMesh_v6yev")
 skin = SubResource("Skin_ijhgh")
+surface_material_override/0 = SubResource("StandardMaterial3D_xw0cg")
 
 [node name="SwordVisuals" parent="." unique_id=918549991 instance=ExtResource("2_liona")]
 
 [node name="Stamina_Bar" type="Label" parent="." unique_id=704141163]
-visible = false
 offset_left = 93.0
 offset_top = 91.0
 offset_right = 253.0
@@ -280,7 +287,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Health_Bar" type="Label" parent="." unique_id=1779911451]
-visible = false
 offset_left = 93.0
 offset_top = 155.0
 offset_right = 253.0
